@@ -1,5 +1,4 @@
 module.exports = {
-    mongoURI: 'mongodb://localhost:27017/db',
-    useNewUrlParser: true,
-    useUnifiedTopology: true
+    mongoURI: 'mongodb+srv://root:r00t@premier-iqlx7.mongodb.net/test?retryWrites=true&w=majority'
+
 }
