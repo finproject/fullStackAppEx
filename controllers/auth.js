@@ -1,12 +1,27 @@
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
-module.exports.login = function (req, res) {
-    res.status(200).json({
-        login: {
-            email: req.body.email,
-            password: req.body.password
+module.exports.login = async function (req, res) {
+    const candidate = await User.findOne({email: req.body.email})
+
+    if (candidate) {
+        const passwordResult = bcrypt.compareSync(req.body.password, candidate.password);
+        if (passwordResult) {
+            //Generation of token, passwords contains
+            const token = '';
+            res.status(200).json({
+                token: token
+            });
+        } else {
+            res.status(401).json({
+                message: 'Password dont contains'
+            });
         }
-    });
+    } else {
+        res.status(404).json({
+            message: 'User with this email dont found'
+        });
+    }
 };
 
 module.exports.register = async function (req, res) {
@@ -18,9 +33,11 @@ module.exports.register = async function (req, res) {
         });
     } else {
         //Need to create a user
+        const salt = bcrypt.genSaltSync(10);
+        const password = req.body.password;
         const user = new User({
             email: req.body.email,
-            password: req.body.password
+            password: bcrypt.hashSync(password, salt)
         });
 
         try {
