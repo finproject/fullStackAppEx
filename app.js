@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const passport = require('passport');
 const morgan = require('morgan');
 const authRoutes = require('./routes/auth');
 const analyticsRoutes = require('./routes/analytics');
@@ -18,6 +18,8 @@ mongoose.connect(keys.mongoURI, {
     .then(() => console.log('MongoDB connected'))
     .catch(error => console.log(error));
 
+app.use(passport.initialize());
+require('./middleware/passport')(passport);
 app.use(require('morgan')('dev'));
 app.use(require('cors')());
 app.use(bodyParser.urlencoded({extended: true}));
