@@ -52,6 +52,6 @@ module.exports.register = async function (req, res) {
             // Error handling
         }
     }
-
 }
+
 
