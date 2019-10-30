@@ -21,7 +21,7 @@ const limits = {
     fileSize: 1024 * 1024 * 5
 }
 
-module.exports = muler({
+module.exports = multer({
     storage: storage,
     fileFilter: fileFilter,
     limits: limits
